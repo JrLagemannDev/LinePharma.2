@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARTRO-C — Line Pharma | Colágeno Tipo II + Cúrcuma, Magnésio, Vitaminas D e K</title>
+<meta name="description" content="Suplemento nutracêutico para o cuidado de articulações, ossos e músculos. Fórmula com Colágeno Tipo II não desnaturado, extrato de Cúrcuma, Magnésio, Vitamina D e K.">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ['Poppins', 'sans-serif'],
+          sans:  ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    color: #1E293B; /* slate-800 */
+    background: #FFFFFF;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  @media (max-width: 767px) {
+    body { padding-bottom: 72px; } /* reserva espaço pro sticky CTA bar */
+  }
+  
+  /* Aplicando a fonte Poppins nos títulos (display) */
+  .font-display { font-family: 'Poppins', sans-serif; letter-spacing: -0.02em; }
+  .tracking-tightest { letter-spacing: -0.04em; }
+
+  /* Grain texture overlay */
+  .grain::before {
+    content:""; position:absolute; inset:0; pointer-events:none; opacity:.20; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.55  0 0 0 0 0.5  0 0 0 0.08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* Soft radial vignettes */
+  .halo-sky  { background: radial-gradient(60% 60% at 20% 30%, rgba(186,230,253,.4), transparent 70%); }
+  .halo-slate  { background: radial-gradient(50% 50% at 80% 70%, rgba(226,232,240,.4), transparent 70%); }
+
+  /* Marquee */
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee-track { animation: marquee 40s linear infinite; }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.8,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* Number display */
+  .num-tab {
+    font-family: 'Poppins', sans-serif; font-style: normal; font-weight: 600;
+    color: #0EA5E9; /* sky-500 - Novo Azul */
+  }
+
+  /* Custom underline on nav */
+  .link-underline { position: relative; }
+  .link-underline::after {
+    content:""; position:absolute; left:0; bottom:-4px; height:1px; width:0; background:currentColor; transition:width .4s ease;
+  }
+  .link-underline:hover::after { width: 100%; }
+
+  /* Ticker dot */
+  @keyframes pulse-dot { 0%,100% { transform: scale(1); opacity:.9; } 50% { transform: scale(1.4); opacity:.5; } }
+  .pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+  /* Soft card hover */
+  .card-lift { transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s ease; border: 1px solid #F1F5F9; }
+  .card-lift:hover { transform: translateY(-6px); box-shadow: 0 20px 40px -15px rgba(15,23,42,.08); }
+
+  /* Molecular pattern */
+  .bg-hex {
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='96' height='84' viewBox='0 0 96 84'><g fill='none' stroke='%23E2E8F0' stroke-width='1'><polygon points='48,4 84,24 84,62 48,82 12,62 12,24'/><circle cx='48' cy='4' r='2.5'/><circle cx='84' cy='24' r='2.5'/><circle cx='84' cy='62' r='2.5'/><circle cx='48' cy='82' r='2.5'/><circle cx='12' cy='62' r='2.5'/><circle cx='12' cy='24' r='2.5'/></g></svg>");
+    background-size: 96px 84px;
+  }
+
+  /* Selection */
+  ::selection { background: #BAE6FD; color: #0F172A; } /* Sky-200 to slate-900 */
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ============ TOP TICKER ============ -->
+<div class="bg-slate-900 text-white text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.25em] uppercase py-2 md:py-2.5 overflow-hidden relative">
+  <div class="flex whitespace-nowrap marquee-track">
+    <div class="flex items-center gap-6 md:gap-10 px-4 md:px-5">
+      <span>Zero açúcares</span><span class="text-sky-400">◆</span>
+      <span>Não contém glúten</span><span class="text-sky-400">◆</span>
+      <span>Colágeno Tipo II não desnaturado</span><span class="text-sky-400">◆</span>
+      <span>Base científica</span><span class="text-sky-400">◆</span>
+      <span>30 cápsulas de 500mg</span><span class="text-sky-400">◆</span>
+    </div>
+    <div class="flex items-center gap-6 md:gap-10 px-4 md:px-5" aria-hidden="true">
+      <span>Zero açúcares</span><span class="text-sky-400">◆</span>
+      <span>Não contém glúten</span><span class="text-sky-400">◆</span>
+      <span>Colágeno Tipo II não desnaturado</span><span class="text-sky-400">◆</span>
+      <span>Base científica</span><span class="text-sky-400">◆</span>
+      <span>30 cápsulas de 500mg</span><span class="text-sky-400">◆</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ NAV ============ -->
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/60">
+  <nav class="max-w-7xl mx-auto px-5 md:px-10 py-3.5 md:py-5 flex items-center justify-between gap-3">
+    <a href="#" class="flex items-center gap-2.5 md:gap-3 min-w-0">
+      
+      <!-- Logo PNG Transparente -->
+      <img src="logo.png" alt="Logo Line Pharma" class="shrink-0 h-10 md:h-12 w-auto" />
+
+      <!-- Se a sua imagem (logo.png) JÁ tiver o texto "LINE PHARMA" escrito nela, você pode APAGAR a div abaixo para não ficar duplicado -->
+      <div class="leading-none min-w-0">
+        <div class="font-display font-semibold text-lg md:text-xl tracking-tight text-slate-900 truncate">Line Pharma</div>
+        <div class="text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.3em] text-slate-500 mt-0.5 truncate">Nutraceutical Supplements</div>
+      </div>
+    </a>
+
+    <div class="hidden md:flex items-center gap-10 text-sm text-slate-700">
+      <a href="#produto"     class="link-underline">O produto</a>
+      <a href="#composicao"  class="link-underline">Composição</a>
+      <a href="#beneficios"  class="link-underline">Benefícios</a>
+      <a href="#marca"       class="link-underline">A marca</a>
+    </div>
+
+    <div class="flex items-center gap-2 md:gap-3 shrink-0">
+      <!-- Desktop CTA -->
+      <a href="https://wa.me/5519000000000?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20ARTRO-C"
+         target="_blank" rel="noopener"
+         class="hidden md:inline-flex group items-center gap-2 bg-green-500 text-white px-5 py-3 rounded-full text-sm hover:bg-green-600 transition-colors">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Fale no WhatsApp
+      </a>
+
+      <!-- Mobile WhatsApp icon-only -->
+      <a href="https://wa.me/5519000000000?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20ARTRO-C"
+         target="_blank" rel="noopener"
+         aria-label="Fale no WhatsApp"
+         class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-full bg-green-500 text-white">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      </a>
+
+      <!-- Hamburger -->
+      <button id="menu-btn" aria-label="Abrir menu" aria-expanded="false"
+              class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-full border border-slate-200 text-slate-900">
+        <svg id="menu-icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="13" x2="20" y2="13"/><line x1="4" y1="19" x2="14" y2="19"/></svg>
+        <svg id="menu-icon-close" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-slate-100 bg-white">
+    <div class="px-5 py-6 flex flex-col">
+      <a href="#produto"    class="py-3 border-b border-slate-100 font-display font-medium text-2xl text-slate-900">O produto</a>
+      <a href="#composicao" class="py-3 border-b border-slate-100 font-display font-medium text-2xl text-slate-900">Composição</a>
+      <a href="#beneficios" class="py-3 border-b border-slate-100 font-display font-medium text-2xl text-slate-900">Benefícios</a>
+      <a href="#marca"      class="py-3 font-display font-medium text-2xl text-slate-900">A marca</a>
+      <a href="https://wa.me/5519000000000?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais%20sobre%20o%20ARTRO-C"
+         target="_blank" rel="noopener"
+         class="mt-5 inline-flex items-center justify-center gap-2 bg-green-500 text-white px-5 py-4 rounded-full text-base font-medium">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Falar no WhatsApp
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO COM IMAGEM DE FUNDO ============ -->
+<section class="relative flex items-center min-h-[80vh] md:min-h-[700px] overflow-hidden bg-slate-900 bg-[url('bg-hero.jpg')] bg-cover bg-center bg-no-repeat">
+  <!-- Overlay escuro para dar contraste ao texto branco -->
+  <div class="absolute inset-0 bg-slate-900/60 mix-blend-multiply"></div>
+  <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-10 py-20 w-full">
+    <!-- Texto alinhado à esquerda com cores claras -->
+    <div class="max-w-3xl reveal">
+      <div class="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur px-3.5 py-1.5 md:px-4 md:py-2 rounded-full border border-white/20 text-[10px] md:text-xs tracking-[0.2em] uppercase text-white shadow-sm font-medium">
+        <span class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-pink-500 pulse-dot"></span>
+        Linha articular · base científica
+      </div>
+
+      <h1 class="font-display font-bold text-white leading-[1.1] tracking-tight mt-6 md:mt-8 text-[38px] sm:text-[50px] md:text-[60px] lg:text-[72px]">
+        Artro-C para o <br>
+        cuidado de <br>
+        <span class="text-sky-400">articulações, <br>
+        músculos e ossos</span>
+      </h1>
+
+      <p class="mt-6 md:mt-8 text-base md:text-xl text-slate-200 max-w-xl leading-relaxed">
+        <span class="font-medium text-white">ARTRO-C</span> combina
+        <em class="font-display italic text-sky-400 font-medium">Colágeno Tipo II não desnaturado</em>,
+        extrato de Cúrcuma, Magnésio e Vitaminas D e K em uma única cápsula por dia —
+        pensado para quem não abre mão de mobilidade.
+      </p>
+
+      <div class="mt-8 md:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+        <a href="https://wa.me/5519000000000?text=Ol%C3%A1%2C%20tenho%20interesse%20no%20ARTRO-C"
+           target="_blank" rel="noopener"
+           class="group inline-flex items-center justify-between sm:justify-start gap-3 bg-green-500 hover:bg-green-600 text-white pl-6 sm:pl-7 pr-3 py-3 rounded-full text-sm md:text-base font-medium transition-all shadow-md border border-green-400/50">
+          Quero conhecer o ARTRO-C
+          <span class="w-9 h-9 rounded-full bg-white text-green-600 flex items-center justify-center group-hover:translate-x-1 transition-transform shrink-0">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          </span>
+        </a>
+        <a href="#composicao" class="text-sm font-medium text-slate-300 underline decoration-sky-400 decoration-2 underline-offset-[6px] hover:decoration-green-400 hover:text-white sm:self-center text-center sm:text-left transition-colors">
+          Ver fórmula completa
+        </a>
+      </div>
+
+      <!-- KPI row re-estilizado para fundo escuro -->
+      <div class="mt-10 md:mt-14 grid grid-cols-3 gap-4 md:gap-6 max-w-lg border-t border-white/20 pt-5 md:pt-6">
+        <div>
+          <div class="font-display text-3xl md:text-4xl text-white font-light">30</div>
+          <div class="text-[10px] md:text-xs tracking-[0.15em] md:tracking-[0.18em] font-semibold uppercase text-slate-300 mt-1 leading-tight">cápsulas<br class="sm:hidden"> <span class="hidden sm:inline">·</span> 500mg</div>
+        </div>
+        <div>
+          <div class="font-display text-3xl md:text-4xl text-white font-light">1<span class="text-sky-400 italic">/dia</span></div>
+          <div class="text-[10px] md:text-xs tracking-[0.15em] md:tracking-[0.18em] font-semibold uppercase text-slate-300 mt-1">posologia</div>
+        </div>
+        <div>
+          <div class="font-display text-3xl md:text-4xl text-white font-light">5</div>
+          <div class="text-[10px] md:text-xs tracking-[0.15em] md:tracking-[0.18em] font-semibold uppercase text-slate-300 mt-1 leading-tight">ativos<br class="sm:hidden"> <span class="hidden sm:inline">·</span> sinérgicos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRODUCT STORY ============ -->
+<section id="produto" class="relative py-16 md:py-32 bg-white">
+  <div class="max-w-7xl mx-auto px-5 md:px-10">
+    <div class="grid lg:grid-cols-12 gap-8 lg:gap-12">
+      <!-- Section label -->
+      <div class="lg:col-span-3">
+        <div class="lg:sticky lg:top-28 flex items-baseline gap-4 lg:block">
+          <span class="num-tab text-5xl md:text-6xl">01</span>
+          <div class="lg:mt-4">
+            <h2 class="text-[10px] md:text-xs tracking-[0.3em] font-semibold uppercase text-slate-500">O Produto</h2>
+            <div class="mt-2 w-10 h-[2px] bg-sky-400"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copy -->
+      <div class="lg:col-span-9 reveal">
+        <h3 class="font-display font-light text-slate-900 leading-[1.04] tracking-tight text-[34px] sm:text-4xl md:text-6xl max-w-3xl">
+          Um cuidado diário <br>
+          para <span class="italic text-sky-500 font-medium">articulações, ossos</span> e músculos.
+        </h3>
+
+        <div class="mt-8 md:mt-10 grid md:grid-cols-2 gap-6 md:gap-12 max-w-4xl">
+          <p class="text-base md:text-lg text-slate-600 leading-relaxed">
+            ARTRO-C foi desenvolvido para quem quer preservar a função articular ao longo dos anos —
+            unindo nutrientes de suporte à cartilagem com minerais e vitaminas essenciais para a matriz óssea.
+          </p>
+          <p class="text-base md:text-lg text-slate-600 leading-relaxed">
+            Cada cápsula de <span class="font-medium text-slate-900">500mg</span> oferece uma fórmula completa
+            em uma dose única por dia — simples de incluir na rotina, rigorosa no padrão científico.
+          </p>
+        </div>
+
+        <!-- Two-up spec -->
+        <div class="mt-10 md:mt-14 grid sm:grid-cols-2 gap-4">
+          <div class="bg-slate-50 rounded-3xl border border-slate-100 p-6 md:p-8 card-lift">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] md:text-xs tracking-[0.3em] font-semibold uppercase text-slate-500">Embalagem</span>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.4"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M6 8h12"/></svg>
+            </div>
+            <div class="font-display text-4xl md:text-5xl text-slate-900 font-light mt-4">30 cápsulas</div>
+            <div class="text-sm text-slate-500 mt-2 font-medium">500mg por cápsula · dose única diária</div>
+          </div>
+          <div class="bg-slate-900 rounded-3xl p-6 md:p-8 card-lift text-white">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] md:text-xs tracking-[0.3em] font-semibold uppercase text-sky-300">Posologia</span>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DD3FC" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            </div>
+            <div class="font-display text-4xl md:text-5xl font-light mt-4">1 <span class="italic text-sky-300 font-medium">cápsula</span></div>
+            <div class="text-sm text-slate-300 mt-2 font-medium">ao dia, preferencialmente com as refeições</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPOSIÇÃO ============ -->
+<section id="composicao" class="relative py-16 md:py-32 bg-slate-50 overflow-hidden border-y border-slate-200/50">
+  <!-- decorative hex top-right -->
+  <div class="absolute top-10 right-0 w-64 md:w-96 h-64 md:h-96 opacity-60 bg-hex"></div>
+
+  <div class="relative max-w-7xl mx-auto px-5 md:px-10">
+    <div class="grid lg:grid-cols-12 gap-8 lg:gap-10 items-end">
+      <div class="lg:col-span-8">
+        <span class="num-tab text-5xl md:text-6xl">02</span>
+        <h2 class="text-[10px] md:text-xs tracking-[0.3em] font-semibold uppercase text-slate-500 mt-2">Composição</h2>
+        <h3 class="font-display font-light text-slate-900 leading-[1.04] tracking-tight text-[34px] sm:text-4xl md:text-6xl mt-4 max-w-3xl">
+          Cinco ativos, <span class="italic text-sky-500 font-medium">uma</span> só cápsula.
+        </h3>
+      </div>
+      <div class="lg:col-span-4">
+        <p class="text-slate-600 leading-relaxed text-base md:text-base">
+          Formulação sinérgica pensada para entregar suporte estrutural e funcional às articulações,
+          com ingredientes reconhecidos por órgãos regulatórios e literatura científica.
+        </p>
+      </div>
+    </div>
+
+    <!-- Ingredient cards -->
+    <div class="mt-10 md:mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+
+      <!-- 01 Colágeno II -->
+      <article class="relative bg-sky-50 rounded-[28px] p-6 md:p-10 card-lift min-h-[280px] md:min-h-[320px] flex flex-col justify-between overflow-hidden border border-sky-100">
+        <div class="absolute -right-6 -top-6 w-40 h-40 rounded-full bg-sky-100/60"></div>
+        <div class="relative flex items-start justify-between">
+          <span class="num-tab text-5xl text-sky-600">01</span>
+          <!-- DNA icon -->
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#0EA5E9" stroke-width="1.2" aria-hidden="true">
+            <path d="M8 4 C 8 10, 24 12, 24 16 C 24 20, 8 22, 8 28"/>
+            <path d="M24 4 C 24 10, 8 12, 8 16 C 8 20, 24 22, 24 28"/>
+          </svg>
+        </div>
+        <div class="relative">
+          <h4 class="font-display font-medium text-2xl md:text-3xl text-slate-900 leading-tight">Colágeno Tipo II<br><span class="italic font-light">não desnaturado</span></h4>
+          <p class="text-sm text-slate-600 mt-3 leading-relaxed">Proteína estrutural presente nas cartilagens — fundamental para a integridade e função articular.</p>
+        </div>
+      </article>
+
+      <!-- 02 Cúrcuma -->
+      <article class="relative bg-sky-500 rounded-[28px] p-6 md:p-10 card-lift min-h-[280px] md:min-h-[320px] flex flex-col justify-between overflow-hidden text-white shadow-md">
+        <div class="absolute -left-8 -bottom-8 w-48 h-48 rounded-full bg-sky-400/60"></div>
+        <div class="relative flex items-start justify-between">
+          <span class="num-tab text-5xl text-white/90" style="color:#FFFFFF">02</span>
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#FFFFFF" stroke-width="1.2" aria-hidden="true"><path d="M4 22 C 8 14, 18 10, 28 8"/><path d="M10 24 C 12 20, 18 18, 24 18"/><circle cx="22" cy="10" r="2"/></svg>
+        </div>
+        <div class="relative">
+          <h4 class="font-display font-medium text-2xl md:text-3xl leading-tight">Extrato de<br><span class="italic font-light">Cúrcuma</span></h4>
+          <p class="text-sm mt-3 leading-relaxed text-sky-100">Conhecida por propriedades antioxidantes e suporte ao equilíbrio inflamatório natural do organismo.</p>
+        </div>
+      </article>
+
+      <!-- 03 Magnésio -->
+      <article class="relative bg-slate-100 rounded-[28px] p-6 md:p-10 card-lift min-h-[280px] md:min-h-[320px] flex flex-col justify-between overflow-hidden text-slate-900 border border-slate-200">
+        <div class="absolute -right-10 top-10 w-40 h-40 rounded-full bg-white/60"></div>
+        <div class="relative flex items-start justify-between">
+          <span class="num-tab text-5xl" style="color:#64748B">03</span>
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#475569" stroke-width="1.2" aria-hidden="true">
+            <polygon points="16,4 28,12 24,26 8,26 4,12"/>
+            <text x="16" y="20" text-anchor="middle" font-family="Poppins" font-size="11" font-weight="500" fill="#475569" stroke="none">Mg</text>
+          </svg>
+        </div>
+        <div class="relative">
+          <h4 class="font-display font-medium text-2xl md:text-3xl leading-tight">Magnésio</h4>
+          <p class="text-sm mt-3 leading-relaxed text-slate-600">Mineral essencial para função muscular, formação óssea e centenas de reações metabólicas.</p>
+        </div>
+      </article>
+
+      <!-- 04 Vit D -->
+      <article class="relative bg-white rounded-[28px] p-6 md:p-10 card-lift min-h-[280px] md:min-h-[320px] flex flex-col justify-between border border-slate-200 overflow-hidden">
+        <div class="absolute -left-10 -top-10 w-48 h-48 rounded-full bg-slate-50"></div>
+        <div class="relative flex items-start justify-between">
+          <span class="num-tab text-5xl">04</span>
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#0EA5E9" stroke-width="1.2" aria-hidden="true">
+            <circle cx="16" cy="16" r="6"/>
+            <line x1="16" y1="2" x2="16" y2="6"/><line x1="16" y1="26" x2="16" y2="30"/>
+            <line x1="2" y1="16" x2="6" y2="16"/><line x1="26" y1="16" x2="30" y2="16"/>
+            <line x1="6" y1="6" x2="9" y2="9"/><line x1="23" y1="23" x2="26" y2="26"/>
+            <line x1="26" y1="6" x2="23" y2="9"/><line x1="9" y1="23" x2="6" y2="26"/>
+          </svg>
+        </div>
+        <div class="relative">
+          <h4 class="font-display font-medium text-2xl md:text-3xl text-slate-900 leading-tight">Vitamina <span class="italic text-sky-500 font-normal">D</span></h4>
+          <p class="text-sm text-slate-600 mt-3 leading-relaxed">Auxilia na absorção de cálcio e fósforo — nutrientes centrais para a saúde óssea.</p>
+        </div>
+      </article>
+
+      <!-- 05 Vit K -->
+      <article class="relative bg-white rounded-[28px] p-6 md:p-10 card-lift min-h-[280px] md:min-h-[320px] flex flex-col justify-between border border-slate-200 overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 w-48 h-48 rounded-full bg-sky-50"></div>
+        <div class="relative flex items-start justify-between">
+          <span class="num-tab text-5xl">05</span>
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#0EA5E9" stroke-width="1.2" aria-hidden="true">
+            <path d="M8 4 v 24 M8 16 l 14 -12 M8 16 l 14 12"/>
+          </svg>
+        </div>
+        <div class="relative">
+          <h4 class="font-display font-medium text-2xl md:text-3xl text-slate-900 leading-tight">Vitamina <span class="italic text-sky-500 font-normal">K</span></h4>
+          <p class="text-sm text-slate-600 mt-3 leading-relaxed">Importante para o metabolismo do cálcio e manutenção da integridade óssea ao longo da vida.</p>
+        </div>
+      </article>
+
+      <!-- 06 CTA card -->
+      <article class="relative bg-slate-900 rounded-[28px] p-6 md:p-10 card-lift min-h-[280px] md:min-h-[320px] flex flex-col justify-between text-white overflow-hidden shadow-lg">
+        <div class="absolute inset-0 halo-sky opacity-20"></div>
+        <div class="relative flex items-start justify-between">
+          <span class="text-xs tracking-[0.3em] font-semibold uppercase text-sky-400">Fórmula completa</span>
+        </div>
+        <div class="relative">
+          <h4 class="font-display font-medium text-2xl md:text-3xl leading-tight">A sinergia que <span class="italic text-sky-400 font-light">faz a diferença.</span></h4>
+          <a href="https://wa.me/5519000000000?text=Quero%20saber%20mais%20sobre%20o%20ARTRO-C"
+             target="_blank" rel="noopener"
+             class="mt-5 inline-flex items-center gap-2 text-sm font-medium text-white hover:text-sky-300 transition-colors">
+            Pedir informações
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BENEFÍCIOS ============ -->
+<section id="beneficios" class="relative py-16 md:py-32 bg-white">
+  <div class="max-w-7xl mx-auto px-5 md:px-10">
+    <div class="flex items-end justify-between flex-wrap gap-6 md:gap-8">
+      <div>
+        <span class="num-tab text-5xl md:text-6xl">03</span>
+        <h2 class="text-[10px] md:text-xs tracking-[0.3em] font-semibold uppercase text-slate-500 mt-2">Benefícios</h2>
+        <h3 class="font-display font-light text-slate-900 leading-[1.04] tracking-tight text-[34px] sm:text-4xl md:text-6xl mt-4 max-w-3xl">
+          Mobilidade <span class="italic text-sky-500 font-medium">como</span> <br class="hidden md:block">
+          você lembra dela.
+        </h3>
+      </div>
+      <p class="max-w-sm text-slate-600 leading-relaxed text-base">
+        Quatro frentes de cuidado que atuam em conjunto — da função articular à absorção de minerais.
+      </p>
+    </div>
+
+    <!-- Editorial grid -->
+    <div class="mt-10 md:mt-16 grid md:grid-cols-12 gap-4">
+
+      <!-- Big card: Articulações -->
+      <div class="md:col-span-7 md:row-span-2 relative rounded-[28px] md:rounded-[32px] overflow-hidden bg-sky-50 min-h-[340px] md:min-h-[460px] p-7 md:p-10 flex flex-col justify-between card-lift border border-sky-100">
+        <div class="absolute inset-0 halo-sky"></div>
+        <!-- abstract joint SVG -->
+        <svg class="absolute -right-10 -bottom-10 w-[300px] md:w-[420px] opacity-60" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="200" cy="200" r="150" stroke="#BAE6FD" stroke-width="1"/>
+          <circle cx="200" cy="200" r="110" stroke="#7DD3FC" stroke-width="1"/>
+          <circle cx="200" cy="200" r="70" stroke="#0EA5E9" stroke-width="1"/>
+          <path d="M200 60 Q 240 180, 340 200 Q 240 220, 200 340 Q 160 220, 60 200 Q 160 180, 200 60 Z" fill="#BAE6FD" opacity=".5"/>
+        </svg>
+        <div class="relative">
+          <span class="inline-block bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[9px] md:text-[10px] font-semibold tracking-[0.25em] md:tracking-[0.3em] uppercase text-sky-600 border border-sky-100">01 · Primário</span>
+        </div>
+        <div class="relative max-w-sm">
+          <h4 class="font-display font-medium text-3xl sm:text-4xl md:text-5xl text-slate-900 leading-[1.05]">
+            Manutenção da <span class="italic text-sky-600 font-light">função articular</span>.
+          </h4>
+          <p class="mt-3 md:mt-4 text-sm md:text-base text-slate-700 leading-relaxed">
+            Colágeno Tipo II não desnaturado atua nas cartilagens, principal tecido da articulação saudável.
+          </p>
+        </div>
+      </div>
+
+      <!-- Ossos -->
+      <div class="md:col-span-5 relative rounded-[28px] md:rounded-[32px] overflow-hidden bg-sky-500 text-white p-7 md:p-8 card-lift min-h-[200px] md:min-h-[220px] flex flex-col justify-between shadow-md">
+        <svg class="absolute -left-8 -bottom-8 w-40 md:w-48 opacity-20" viewBox="0 0 200 200" fill="none" stroke="#FFFFFF" stroke-width="1.2" aria-hidden="true">
+          <path d="M60 40 a 15 15 0 1 1 30 0 v 20 l 20 20 v 40 a 15 15 0 1 1 -30 0 v -20 l -20 -20 Z"/>
+        </svg>
+        <span class="relative text-[10px] tracking-[0.3em] font-semibold uppercase opacity-80 text-sky-100">02</span>
+        <div class="relative">
+          <h4 class="font-display font-medium text-2xl md:text-3xl leading-tight">Suporte a <span class="italic font-light">ossos e dentes</span>.</h4>
+          <p class="mt-2 text-sm text-sky-100 leading-relaxed">Vitaminas D e K favorecem o metabolismo e a formação da matriz óssea.</p>
+        </div>
+      </div>
+
+      <!-- Absorção -->
+      <div class="md:col-span-5 relative rounded-[28px] md:rounded-[32px] overflow-hidden bg-slate-100 p-7 md:p-8 card-lift min-h-[200px] md:min-h-[220px] flex flex-col justify-between border border-slate-200">
+        <div class="absolute inset-0 halo-slate"></div>
+        <svg class="absolute right-4 top-4 w-20 md:w-24 opacity-50" viewBox="0 0 100 100" fill="none" stroke="#94A3B8" stroke-width="1.2" aria-hidden="true">
+          <circle cx="50" cy="50" r="30"/>
+          <circle cx="50" cy="50" r="20"/>
+          <circle cx="50" cy="50" r="10"/>
+          <line x1="15" y1="50" x2="85" y2="50"/>
+          <line x1="50" y1="15" x2="50" y2="85"/>
+        </svg>
+        <span class="relative text-[10px] tracking-[0.3em] font-semibold uppercase text-slate-500">03</span>
+        <div class="relative">
+          <h4 class="font-display font-medium text-2xl md:text-3xl text-slate-900 leading-tight">Melhora da <span class="italic text-slate-600 font-light">absorção</span> de minerais.</h4>
+          <p class="mt-2 text-sm text-slate-600 leading-relaxed">Fórmula pensada para maximizar o aproveitamento de cálcio e fósforo.</p>
+        </div>
+      </div>
+
+      <!-- Músculos -->
+      <div class="md:col-span-12 relative rounded-[28px] md:rounded-[32px] overflow-hidden bg-slate-900 text-white p-7 md:p-10 card-lift flex flex-col md:flex-row gap-6 md:gap-8 items-start md:items-center min-h-[200px] md:min-h-[220px] shadow-lg">
+        <div class="absolute inset-0 halo-sky opacity-40"></div>
+        <div class="relative md:w-2/3">
+          <span class="text-[10px] tracking-[0.3em] font-semibold uppercase text-sky-400">04</span>
+          <h4 class="font-display font-medium text-2xl sm:text-3xl md:text-5xl leading-[1.05] mt-2 md:mt-3">
+            Função muscular e <span class="italic text-sky-400 font-light">mobilidade diária</span>.
+          </h4>
+          <p class="mt-3 text-sm md:text-base text-slate-300 max-w-xl leading-relaxed">
+            Magnésio participa de mais de 300 reações enzimáticas — incluindo contração muscular e equilíbrio neuromuscular.
+          </p>
+        </div>
+        <div class="relative md:w-1/3 flex flex-wrap items-center gap-2 md:gap-3 md:justify-end">
+          <div class="flex items-center gap-2 bg-white/10 backdrop-blur px-3 md:px-4 py-2 rounded-full text-[11px] md:text-xs font-medium border border-white/5">
+            <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Energia celular
+          </div>
+          <div class="flex items-center gap-2 bg-white/10 backdrop-blur px-3 md:px-4 py-2 rounded-full text-[11px] md:text-xs font-medium border border-white/5">
+            <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span> Equilíbrio
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DIFERENCIAIS — FAIXA EDITORIAL ============ -->
+<section class="relative py-14 md:py-28 bg-slate-50 overflow-hidden border-y border-slate-200">
+  <div class="absolute inset-0 halo-sky"></div>
+  <div class="relative max-w-7xl mx-auto px-5 md:px-10">
+    <div class="grid lg:grid-cols-3 gap-8 md:gap-10 items-center">
+      <div>
+        <span class="num-tab text-5xl md:text-6xl">04</span>
+        <h2 class="text-[10px] md:text-xs tracking-[0.3em] font-semibold uppercase text-slate-500 mt-2">Diferenciais</h2>
+        <h3 class="font-display font-light text-slate-900 leading-[1.04] tracking-tight text-[34px] sm:text-4xl md:text-5xl mt-4">
+          Limpo na fórmula. <br><span class="italic text-sky-500 font-medium">Rigoroso</span> no padrão.
+        </h3>
+      </div>
+
+      <div class="lg:col-span-2 grid sm:grid-cols-2 gap-4 md:gap-5">
+        <div class="bg-white rounded-[24px] md:rounded-[28px] p-6 md:p-8 border border-slate-200 card-lift flex flex-col gap-4 md:gap-5">
+          <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-sky-50 flex items-center justify-center">
+            <!-- sugar cube crossed -->
+            <svg width="26" height="26" viewBox="0 0 32 32" fill="none" stroke="#0EA5E9" stroke-width="1.4" aria-hidden="true">
+              <rect x="6" y="6" width="20" height="20" rx="3"/>
+              <line x1="8" y1="8" x2="24" y2="24"/>
+              <path d="M12 14h8M12 18h8"/>
+            </svg>
+          </div>
+          <div>
+            <div class="font-display font-medium text-2xl md:text-3xl text-slate-900">Zero açúcares</div>
+            <p class="mt-2 text-sm text-slate-600">Sem adição de açúcares na composição.</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-[24px] md:rounded-[28px] p-6 md:p-8 border border-slate-200 card-lift flex flex-col gap-4 md:gap-5">
+          <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-slate-100 flex items-center justify-center">
+            <!-- wheat crossed -->
+            <svg width="26" height="26" viewBox="0 0 32 32" fill="none" stroke="#64748B" stroke-width="1.4" aria-hidden="true">
+              <path d="M16 4v24"/>
+              <path d="M16 10c-3-2-6-2-6-2s0 3 3 5 3 0 3 0"/>
+              <path d="M16 10c3-2 6-2 6-2s0 3-3 5-3 0-3 0"/>
+              <path d="M16 18c-3-2-6-2-6-2s0 3 3 5 3 0 3 0"/>
+              <path d="M16 18c3-2 6-2 6-2s0 3-3 5-3 0-3 0"/>
+              <line x1="6" y1="6" x2="26" y2="26"/>
+            </svg>
+          </div>
+          <div>
+            <div class="font-display font-medium text-2xl md:text-3xl text-slate-900">Não contém glúten</div>
+            <p class="mt-2 text-sm text-slate-600">Seguro para rotinas com restrição a glúten.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- marquee of values -->
+    <div class="mt-10 md:mt-14 overflow-hidden border-t border-b border-slate-200 py-5 md:py-6">
+      <div class="flex whitespace-nowrap marquee-track font-display font-medium text-2xl sm:text-3xl md:text-5xl">
+        <div class="flex items-center gap-6 md:gap-10 px-4 md:px-5">
+          <span class="text-slate-900">ciência</span>
+          <span class="text-sky-500 italic">·</span>
+          <span class="text-sky-500 italic">prevenção</span>
+          <span class="text-sky-500 italic">·</span>
+          <span class="text-slate-900">bem-estar</span>
+          <span class="text-sky-500 italic">·</span>
+          <span class="text-slate-500 italic font-light">mobilidade</span>
+          <span class="text-sky-500 italic">·</span>
+          <span class="text-slate-900">cuidado diário</span>
+          <span class="text-sky-500 italic">·</span>
+        </div>
+        <div class="flex items-center gap-6 md:gap-10 px-4 md:px-5" aria-hidden="true">
+          <span class="text-slate-900">ciência</span>
+          <span class="text-sky-500 italic">·</span>
+          <span class="text-sky-500 italic">prevenção</span>
+          <span class="text-sky-500 italic">·</span>
+          <span class="text-slate-900">bem-estar</span>
+          <span class="text-sky-500 italic">·</span>
+          <span class="text-slate-500 italic font-light">mobilidade</span>
+          <span class="text-sky-500 italic">·</span>
+          <span class="text-slate-900">cuidado diário</span>
+          <span class="text-sky-500 italic">·</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOBRE LINE PHARMA ============ -->
+<section id="marca" class="relative py-16 md:py-32 bg-white">
+  <div class="max-w-7xl mx-auto px-5 md:px-10 grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+
+    <!-- Visual -->
+    <div class="lg:col-span-5 relative reveal order-2 lg:order-1">
+      <div class="relative rounded-[32px] md:rounded-[40px] bg-slate-50 border border-slate-100 p-6 md:p-10 overflow-hidden min-h-[360px] md:min-h-[480px] flex items-center justify-center">
+        <div class="absolute inset-0 halo-sky"></div>
+
+        <!-- Imagem Grande PNG Transparente -->
+        <img src="logo.png" alt="Logo Line Pharma" class="relative h-48 sm:h-64 md:h-80 w-auto" />
+      </div>
+    </div>
+
+    <!-- Copy -->
+    <div class="lg:col-span-7 reveal order-1 lg:order-2">
+      <span class="num-tab text-5xl md:text-6xl">05</span>
+      <h2 class="text-[10px] md:text-xs tracking-[0.3em] font-semibold uppercase text-slate-500 mt-2">A marca</h2>
+      <h3 class="font-display font-light text-slate-900 leading-[1.04] tracking-tight text-[34px] sm:text-4xl md:text-6xl mt-4">
+        Line Pharma — <br>
+        <span class="italic text-sky-500 font-medium">ciência</span> em cápsula.
+      </h3>
+
+      <div class="mt-6 md:mt-8 space-y-4 md:space-y-5 text-base md:text-lg text-slate-600 leading-relaxed max-w-2xl">
+        <p>
+          Somos uma marca de base científica, focada em <span class="font-medium text-slate-900">prevenção e bem-estar</span>.
+          Nossos produtos nutracêuticos nascem de formulações criteriosas, com linguagem técnica clara e compromisso com credibilidade.
+        </p>
+        <p>
+          Acreditamos que saúde começa nas escolhas diárias — e que um bom suplemento é um pacto com o futuro do corpo.
+        </p>
+      </div>
+
+      <!-- values -->
+      <div class="mt-8 md:mt-10 grid grid-cols-3 gap-3 md:gap-4 max-w-2xl">
+        <div class="border-t border-sky-300 pt-3 md:pt-4">
+          <div class="text-[10px] md:text-xs tracking-[0.2em] font-semibold uppercase text-sky-600">01</div>
+          <div class="font-display font-medium text-lg md:text-xl text-slate-900 mt-1">Ciência</div>
+        </div>
+        <div class="border-t border-sky-500 pt-3 md:pt-4">
+          <div class="text-[10px] md:text-xs tracking-[0.2em] font-semibold uppercase text-sky-500">02</div>
+          <div class="font-display font-medium text-lg md:text-xl text-slate-900 mt-1">Prevenção</div>
+        </div>
+        <div class="border-t border-slate-400 pt-3 md:pt-4">
+          <div class="text-[10px] md:text-xs tracking-[0.2em] font-semibold uppercase text-slate-500">03</div>
+          <div class="font-display font-medium text-lg md:text-xl text-slate-900 mt-1">Bem-estar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section class="relative py-20 md:py-32 bg-sky-500 text-white overflow-hidden">
+  <div class="absolute inset-0 halo-sky opacity-20"></div>
+  <div class="absolute -right-24 -top-24 w-[320px] md:w-[520px] h-[320px] md:h-[520px] rounded-full bg-sky-400/40"></div>
+  <div class="absolute -left-32 -bottom-32 w-[260px] md:w-[420px] h-[260px] md:h-[420px] rounded-full bg-sky-400/20"></div>
+
+  <div class="relative max-w-5xl mx-auto px-5 md:px-10 text-center">
+    <span class="inline-block bg-white/15 backdrop-blur px-3.5 py-1.5 md:px-4 md:py-2 rounded-full border border-white/10 text-[10px] font-semibold tracking-[0.25em] md:tracking-[0.3em] uppercase">
+      Pronto para conhecer o ARTRO-C
+    </span>
+    <h3 class="font-display font-light leading-[1.02] tracking-tight text-[44px] sm:text-5xl md:text-7xl lg:text-8xl mt-5 md:mt-6">
+      Cuide hoje <br>
+      <span class="italic font-medium">do movimento</span> de amanhã.
+    </h3>
+    <p class="mt-5 md:mt-6 text-base md:text-xl max-w-2xl mx-auto text-sky-50">
+      Fale diretamente com nossa equipe pelo WhatsApp e descubra como o ARTRO-C pode entrar na sua rotina.
+    </p>
+
+    <a href="https://wa.me/5519000000000?text=Ol%C3%A1%2C%20tenho%20interesse%20no%20ARTRO-C%20da%20Line%20Pharma"
+       target="_blank" rel="noopener"
+       class="group mt-8 md:mt-10 inline-flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white pl-6 md:pl-8 pr-3 py-3 md:py-4 rounded-full text-base md:text-lg font-medium transition-all shadow-xl">
+      Falar no WhatsApp
+      <span class="w-10 md:w-11 h-10 md:h-11 rounded-full bg-white text-green-500 flex items-center justify-center transition-colors">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      </span>
+    </a>
+
+    <div class="mt-8 md:mt-10 text-[10px] md:text-xs tracking-[0.25em] md:tracking-[0.3em] font-semibold uppercase text-sky-200">
+      Atendimento humano · seg–sex · 9h–18h
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-slate-900 text-slate-300 pt-14 md:pt-20 pb-24 md:pb-10">
+  <div class="max-w-7xl mx-auto px-5 md:px-10">
+    <div class="grid sm:grid-cols-2 md:grid-cols-12 gap-8 md:gap-10 pb-10 md:pb-12 border-b border-slate-700/50">
+
+      <div class="sm:col-span-2 md:col-span-5">
+        <div class="flex items-center gap-3">
+          
+          <!-- Imagem Pequena no Rodapé PNG -->
+          <!-- Mantive um fundo branco suave (bg-white p-1) apenas porque a cor do seu texto é cinzento escuro, e iria desaparecer no fundo escuro do rodapé -->
+          <img src="logo.png" alt="Logo Line Pharma" class="shrink-0 h-10 md:h-12 w-auto bg-white p-1 rounded-md" />
+
+          <!-- Se a sua imagem já tiver o texto, você pode APAGAR a div abaixo para não duplicar -->
+          <div>
+            <div class="font-display font-medium text-xl md:text-2xl text-white">Line Pharma</div>
+            <div class="text-[9px] md:text-[10px] tracking-[0.25em] md:tracking-[0.3em] font-semibold uppercase text-slate-500 mt-0.5">Nutraceutical Supplements</div>
+          </div>
+        </div>
+        <p class="mt-5 md:mt-6 text-sm md:text-base text-slate-400 max-w-md leading-relaxed">
+          Nutracêuticos de base científica para rotinas que levam prevenção e bem-estar a sério.
+        </p>
+      </div>
+
+      <div class="md:col-span-2">
+        <div class="text-[10px] md:text-xs tracking-[0.3em] font-semibold uppercase text-sky-400 mb-3 md:mb-4">Produto</div>
+        <ul class="space-y-2 text-sm md:text-base text-slate-300">
+          <li><a href="#produto" class="hover:text-white transition-colors">O ARTRO-C</a></li>
+          <li><a href="#composicao" class="hover:text-white transition-colors">Composição</a></li>
+          <li><a href="#beneficios" class="hover:text-white transition-colors">Benefícios</a></li>
+        </ul>
+      </div>
+
+      <div class="md:col-span-2">
+        <div class="text-[10px] md:text-xs tracking-[0.3em] font-semibold uppercase text-sky-400 mb-3 md:mb-4">Marca</div>
+        <ul class="space-y-2 text-sm md:text-base text-slate-300">
+          <li><a href="#marca" class="hover:text-white transition-colors">Sobre</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Ciência</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Contato</a></li>
+        </ul>
+      </div>
+
+      <div class="sm:col-span-2 md:col-span-3">
+        <div class="text-[10px] md:text-xs tracking-[0.3em] font-semibold uppercase text-sky-400 mb-3 md:mb-4">Fale conosco</div>
+        <a href="https://wa.me/5519000000000"
+           target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 text-white hover:text-green-400 transition-colors font-medium">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          WhatsApp
+        </a>
+        <div class="mt-3 text-sm text-slate-400">contato@linepharma.com.br</div>
+      </div>
+    </div>
+
+    <div class="pt-6 md:pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-4 text-[11px] md:text-xs text-slate-500">
+      <div>© 2026 Line Pharma. Todos os direitos reservados.</div>
+      <div class="flex items-center gap-5 md:gap-6">
+        <a href="#" class="hover:text-white">Política de Privacidade</a>
+        <a href="#" class="hover:text-white">Termos de Uso</a>
+      </div>
+      <div class="font-display font-light italic text-slate-400">"Ciência em cápsula."</div>
+    </div>
+
+    <!-- Regulatory disclaimer -->
+    <div class="mt-6 md:mt-8 text-[10px] md:text-[11px] text-slate-600 leading-relaxed max-w-4xl">
+      Este produto é um suplemento alimentar. Não substitui uma alimentação equilibrada e é de consumo orientado.
+      Crianças, gestantes, lactantes, idosos e portadores de enfermidades: consultar o nutricionista ou o médico.
+      As informações contidas nesta página têm caráter informativo e não substituem orientação profissional.
+    </div>
+  </div>
+</footer>
+
+<!-- ============ FLOATING WHATSAPP (desktop only) ============ -->
+<a href="https://wa.me/5519000000000?text=Ol%C3%A1%2C%20tenho%20interesse%20no%20ARTRO-C"
+   target="_blank" rel="noopener"
+   aria-label="Fale conosco no WhatsApp"
+   class="hidden md:flex fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-green-500 hover:bg-green-600 text-white items-center justify-center shadow-[0_20px_40px_-10px_rgba(34,197,94,.5)] transition-all hover:scale-110">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  <span class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-pink-500 border-2 border-white pulse-dot"></span>
+</a>
+
+<!-- ============ MOBILE STICKY CTA BAR ============ -->
+<div class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-3 flex items-center gap-3">
+  <div class="flex-1 min-w-0">
+    <div class="font-display font-medium text-base text-slate-900 leading-tight truncate">ARTRO-C · Line Pharma</div>
+    <div class="text-[10px] tracking-[0.2em] font-semibold uppercase text-slate-500 mt-0.5">Fale pelo WhatsApp</div>
+  </div>
+  <a href="https://wa.me/5519000000000?text=Ol%C3%A1%2C%20tenho%20interesse%20no%20ARTRO-C"
+     target="_blank" rel="noopener"
+     class="inline-flex items-center gap-2 bg-green-500 text-white px-4 py-3 rounded-full text-sm font-medium shrink-0">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    Falar agora
+  </a>
+</div>
+
+<!-- ============ REVEAL + MOBILE MENU JS ============ -->
+<script>
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Mobile menu toggle
+  (function() {
+    const btn = document.getElementById('menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('menu-icon-open');
+    const iconClose = document.getElementById('menu-icon-close');
+    if (!btn || !menu) return;
+
+    function close() {
+      menu.classList.add('hidden');
+      btn.setAttribute('aria-expanded', 'false');
+      iconOpen.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+    }
+    function open() {
+      menu.classList.remove('hidden');
+      btn.setAttribute('aria-expanded', 'true');
+      iconOpen.classList.add('hidden');
+      iconClose.classList.remove('hidden');
+    }
+    btn.addEventListener('click', () => {
+      menu.classList.contains('hidden') ? open() : close();
+    });
+    // Close on link click
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+    // Close on resize to desktop
+    window.addEventListener('resize', () => { if (window.innerWidth >= 768) close(); });
+  })();
+</script>
+
+</body>
+</html>
