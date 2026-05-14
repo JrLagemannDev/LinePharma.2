@@ -199,8 +199,6 @@
     border-color: rgba(255,255,255,.45);
     background-color: rgba(15,23,42,.18);
   }
-  .site-header.navbar--transparent #site-logo-3d canvas { filter: grayscale(1) brightness(3.3); }
-
   .site-header.navbar--scrolled .brand-primary { color: #0f172a; }
   .site-header.navbar--scrolled .brand-secondary { color: #64748b; }
   .site-header.navbar--scrolled .nav-links,
@@ -210,8 +208,6 @@
     border-color: rgba(148,163,184,.45);
     background-color: transparent;
   }
-  .site-header.navbar--scrolled #site-logo-3d canvas { filter: grayscale(1) brightness(.22); }
-
   .composition-card,
   .site-card {
     transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s ease, background-color .28s ease, border-color .28s ease;
@@ -273,7 +269,11 @@
     <a href="#" class="flex items-center gap-2.5 md:gap-3 min-w-0">
       
       <!-- Logo 3D -->
-      <div id="site-logo-3d" class="shrink-0 relative h-10 w-10 md:h-12 md:w-12 overflow-hidden">
+      <div
+        id="site-logo-3d"
+        class="shrink-0 relative h-11 w-11 md:h-14 md:w-14 overflow-visible cursor-grab select-none touch-pan-y"
+        aria-label="Logo 3D interativa da Line Pharma"
+      >
       </div>
 
       <div class="leading-none min-w-0">
@@ -854,7 +854,11 @@
         <div class="flex items-center gap-3">
           
           <!-- Logo 3D no rodapé -->
-          <div id="footer-logo-3d" class="shrink-0 relative h-10 w-10 md:h-12 md:w-12 bg-white p-1 rounded-md overflow-hidden">
+          <div
+            id="footer-logo-3d"
+            class="shrink-0 relative h-12 w-12 md:h-16 md:w-16 overflow-visible cursor-grab select-none touch-pan-y"
+            aria-label="Logo 3D interativa da Line Pharma"
+          >
           </div>
 
           <!-- Se a sua imagem já tiver o texto, você pode APAGAR a div abaixo para não duplicar -->
@@ -1020,10 +1024,11 @@
   import { GLTFLoader } from './assets/vendor/three/examples/jsm/loaders/GLTFLoader.js';
 
   (function () {
+    const LOGO_PINK = '#F2B6C4';
     const targets = [
-      { mountId: 'site-logo-3d', speed: 0.0036, fallbackSize: 48 },
+      { mountId: 'site-logo-3d', speed: 0.0036, fallbackSize: 56, interactive: true },
       { mountId: 'brand-logo-3d', speed: 0.0032, fallbackSize: 620, interactive: true },
-      { mountId: 'footer-logo-3d', speed: 0.0036, fallbackSize: 48 }
+      { mountId: 'footer-logo-3d', speed: 0.0036, fallbackSize: 64, interactive: true }
     ]
       .map((t) => ({ ...t, mount: document.getElementById(t.mountId) }))
       .filter((t) => t.mount);
@@ -1042,16 +1047,20 @@
 
     const viewers = [];
 
-    function tintMaterial(material) {
-      if (!material || !material.color) return;
-      material.color.set('#F2B6C4');
-      if ('metalness' in material) material.metalness = 0.05;
-      if ('roughness' in material) material.roughness = 0.45;
-      material.needsUpdate = true;
+    function createLogoMaterial() {
+      return new THREE.MeshPhysicalMaterial({
+        color: new THREE.Color(LOGO_PINK),
+        emissive: new THREE.Color(LOGO_PINK),
+        emissiveIntensity: 0.08,
+        metalness: 0.02,
+        roughness: 0.34,
+        clearcoat: 0.4,
+        clearcoatRoughness: 0.42
+      });
     }
 
     function enableHorizontalDrag(mount, canvas, model) {
-      const state = { isDragging: false, lastX: 0, velocity: 0 };
+      const state = { isDragging: false, lastX: 0, velocity: 0, hasMoved: false };
       canvas.style.cursor = 'grab';
       canvas.style.touchAction = 'pan-y';
 
@@ -1068,6 +1077,7 @@
         state.isDragging = true;
         state.lastX = event.clientX;
         state.velocity = 0;
+        state.hasMoved = false;
         canvas.style.cursor = 'grabbing';
         if (canvas.setPointerCapture) canvas.setPointerCapture(event.pointerId);
       });
@@ -1076,9 +1086,16 @@
         if (!state.isDragging) return;
         const deltaX = event.clientX - state.lastX;
         state.lastX = event.clientX;
+        if (Math.abs(deltaX) > 1.5) state.hasMoved = true;
         const rotationDelta = deltaX * 0.012;
         model.rotation.y += rotationDelta;
         state.velocity = rotationDelta;
+      });
+
+      canvas.addEventListener('click', (event) => {
+        if (!state.hasMoved) return;
+        event.preventDefault();
+        event.stopPropagation();
       });
 
       canvas.addEventListener('pointerup', stopDrag);
@@ -1116,24 +1133,18 @@
           renderer.domElement.style.display = 'block';
           mount.appendChild(renderer.domElement);
 
-          scene.add(new THREE.AmbientLight(0xffffff, 1.15));
-          const keyLight = new THREE.DirectionalLight(0xffffff, 0.8);
+          scene.add(new THREE.AmbientLight(0xffffff, 1.55));
+          const keyLight = new THREE.DirectionalLight(0xffffff, 1);
           keyLight.position.set(2.5, 3, 4);
           scene.add(keyLight);
+          const fillLight = new THREE.DirectionalLight(0xffffff, 0.45);
+          fillLight.position.set(-2, 1.5, 2.2);
+          scene.add(fillLight);
 
           const model = gltf.scene.clone(true);
           model.traverse((child) => {
             if (!child.isMesh) return;
-            if (Array.isArray(child.material)) {
-              child.material = child.material.map((m) => {
-                const copy = m.clone();
-                tintMaterial(copy);
-                return copy;
-              });
-            } else if (child.material) {
-              child.material = child.material.clone();
-              tintMaterial(child.material);
-            }
+            child.material = createLogoMaterial();
             child.castShadow = false;
             child.receiveShadow = false;
           });
