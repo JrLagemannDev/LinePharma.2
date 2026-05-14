@@ -75,6 +75,13 @@
   /* Marquee */
   @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
   .marquee-track { animation: marquee 40s linear infinite; }
+  @keyframes value-strip-loop { from { transform: translateX(0); } to { transform: translateX(-25%); } }
+  .value-strip-track {
+    width: max-content;
+    animation: value-strip-loop 28s linear infinite;
+    will-change: transform;
+  }
+  .value-strip-set { flex: 0 0 auto; }
 
   /* Reveal */
   .reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.8,.2,1); }
@@ -716,8 +723,8 @@
 
   <!-- full-width value strip -->
   <div class="mt-10 md:mt-14 overflow-hidden border-y border-slate-800 bg-slate-950 py-3 md:py-3.5">
-    <div class="flex whitespace-nowrap marquee-track font-display font-medium text-[10px] md:text-xs uppercase tracking-[0.34em] text-white">
-      <div class="flex items-center gap-7 md:gap-10 px-5 md:px-8">
+    <div class="flex whitespace-nowrap value-strip-track font-display font-medium text-[10px] md:text-xs uppercase tracking-[0.34em] text-white">
+      <div class="value-strip-set flex items-center gap-7 md:gap-10 px-5 md:px-8">
         <span>CIÊNCIA</span><span class="text-[var(--brand-blue)]">◆</span>
         <span>PREVENÇÃO</span><span class="text-[var(--brand-blue)]">◆</span>
         <span>BEM-ESTAR</span><span class="text-[var(--brand-blue)]">◆</span>
@@ -725,7 +732,23 @@
         <span>CUIDADO DIÁRIO</span><span class="text-[var(--brand-blue)]">◆</span>
         <span>BASE CIENTÍFICA</span><span class="text-[var(--brand-blue)]">◆</span>
       </div>
-      <div class="flex items-center gap-7 md:gap-10 px-5 md:px-8" aria-hidden="true">
+      <div class="value-strip-set flex items-center gap-7 md:gap-10 px-5 md:px-8" aria-hidden="true">
+        <span>CIÊNCIA</span><span class="text-[var(--brand-blue)]">◆</span>
+        <span>PREVENÇÃO</span><span class="text-[var(--brand-blue)]">◆</span>
+        <span>BEM-ESTAR</span><span class="text-[var(--brand-blue)]">◆</span>
+        <span>MOBILIDADE</span><span class="text-[var(--brand-blue)]">◆</span>
+        <span>CUIDADO DIÁRIO</span><span class="text-[var(--brand-blue)]">◆</span>
+        <span>BASE CIENTÍFICA</span><span class="text-[var(--brand-blue)]">◆</span>
+      </div>
+      <div class="value-strip-set flex items-center gap-7 md:gap-10 px-5 md:px-8" aria-hidden="true">
+        <span>CIÊNCIA</span><span class="text-[var(--brand-blue)]">◆</span>
+        <span>PREVENÇÃO</span><span class="text-[var(--brand-blue)]">◆</span>
+        <span>BEM-ESTAR</span><span class="text-[var(--brand-blue)]">◆</span>
+        <span>MOBILIDADE</span><span class="text-[var(--brand-blue)]">◆</span>
+        <span>CUIDADO DIÁRIO</span><span class="text-[var(--brand-blue)]">◆</span>
+        <span>BASE CIENTÍFICA</span><span class="text-[var(--brand-blue)]">◆</span>
+      </div>
+      <div class="value-strip-set flex items-center gap-7 md:gap-10 px-5 md:px-8" aria-hidden="true">
         <span>CIÊNCIA</span><span class="text-[var(--brand-blue)]">◆</span>
         <span>PREVENÇÃO</span><span class="text-[var(--brand-blue)]">◆</span>
         <span>BEM-ESTAR</span><span class="text-[var(--brand-blue)]">◆</span>
@@ -742,13 +765,13 @@
   <div class="max-w-7xl mx-auto px-5 md:px-10 grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
 
     <!-- Visual -->
-    <div class="lg:col-span-5 relative reveal order-2 lg:order-1">
-      <div class="relative rounded-[32px] md:rounded-[40px] bg-slate-50 border border-slate-100 p-6 md:p-10 overflow-hidden min-h-[360px] md:min-h-[480px] flex items-center justify-center">
-        <div class="absolute inset-0 halo-sky"></div>
-
-        <!-- Logo 3D grande -->
-        <div id="brand-logo-3d" class="relative h-48 w-48 sm:h-64 sm:w-64 md:h-80 md:w-80 overflow-hidden">
-        </div>
+    <div class="lg:col-span-5 relative reveal order-2 lg:order-1 flex justify-center lg:justify-start">
+      <!-- Logo 3D grande e interativa -->
+      <div
+        id="brand-logo-3d"
+        class="relative h-[300px] w-[300px] sm:h-[420px] sm:w-[420px] md:h-[560px] md:w-[560px] lg:h-[620px] lg:w-[620px] max-w-full overflow-visible cursor-grab select-none touch-pan-y"
+        aria-label="Logo 3D interativa da Line Pharma"
+      >
       </div>
     </div>
 
@@ -999,7 +1022,7 @@
   (function () {
     const targets = [
       { mountId: 'site-logo-3d', speed: 0.0036, fallbackSize: 48 },
-      { mountId: 'brand-logo-3d', speed: 0.0032, fallbackSize: 320 },
+      { mountId: 'brand-logo-3d', speed: 0.0032, fallbackSize: 620, interactive: true },
       { mountId: 'footer-logo-3d', speed: 0.0036, fallbackSize: 48 }
     ]
       .map((t) => ({ ...t, mount: document.getElementById(t.mountId) }))
@@ -1027,12 +1050,51 @@
       material.needsUpdate = true;
     }
 
+    function enableHorizontalDrag(mount, canvas, model) {
+      const state = { isDragging: false, lastX: 0, velocity: 0 };
+      canvas.style.cursor = 'grab';
+      canvas.style.touchAction = 'pan-y';
+
+      const stopDrag = (event) => {
+        if (!state.isDragging) return;
+        state.isDragging = false;
+        canvas.style.cursor = 'grab';
+        if (event?.pointerId !== undefined && canvas.releasePointerCapture) {
+          try { canvas.releasePointerCapture(event.pointerId); } catch {}
+        }
+      };
+
+      canvas.addEventListener('pointerdown', (event) => {
+        state.isDragging = true;
+        state.lastX = event.clientX;
+        state.velocity = 0;
+        canvas.style.cursor = 'grabbing';
+        if (canvas.setPointerCapture) canvas.setPointerCapture(event.pointerId);
+      });
+
+      canvas.addEventListener('pointermove', (event) => {
+        if (!state.isDragging) return;
+        const deltaX = event.clientX - state.lastX;
+        state.lastX = event.clientX;
+        const rotationDelta = deltaX * 0.012;
+        model.rotation.y += rotationDelta;
+        state.velocity = rotationDelta;
+      });
+
+      canvas.addEventListener('pointerup', stopDrag);
+      canvas.addEventListener('pointercancel', stopDrag);
+      canvas.addEventListener('lostpointercapture', stopDrag);
+      mount.addEventListener('mouseleave', stopDrag);
+
+      return state;
+    }
+
     const loader = new GLTFLoader();
     loader.load(
       'assets/models/logo-3d.glb',
       (gltf) => {
         for (const target of targets) {
-          const { mount, speed, fallbackSize } = target;
+          const { mount, speed, fallbackSize, interactive } = target;
 
           const scene = new THREE.Scene();
           const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
@@ -1106,7 +1168,8 @@
             window.addEventListener('resize', resize);
           }
 
-          viewers.push({ renderer, scene, camera, model, speed });
+          const dragState = interactive ? enableHorizontalDrag(mount, renderer.domElement, model) : null;
+          viewers.push({ renderer, scene, camera, model, speed, dragState });
         }
       },
       undefined,
@@ -1119,6 +1182,14 @@
       requestAnimationFrame(animate);
       if (document.hidden) return;
       for (const viewer of viewers) {
+        if (viewer.dragState?.isDragging) {
+          viewer.renderer.render(viewer.scene, viewer.camera);
+          continue;
+        }
+        if (viewer.dragState && Math.abs(viewer.dragState.velocity) > 0.0001) {
+          viewer.model.rotation.y += viewer.dragState.velocity;
+          viewer.dragState.velocity *= 0.92;
+        }
         viewer.model.rotation.y += viewer.speed;
         viewer.renderer.render(viewer.scene, viewer.camera);
       }
