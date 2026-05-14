@@ -157,6 +157,33 @@
     background-color: transparent;
   }
   .site-header.navbar--scrolled #site-logo-3d canvas { filter: grayscale(1) brightness(.22); }
+
+  .composition-card {
+    transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s ease, background-color .28s ease, border-color .28s ease;
+  }
+  .composition-card-light {
+    background-color: rgba(255,255,255,.86);
+    border-color: rgba(226,232,240,.72);
+  }
+  .composition-card-light:hover {
+    background-color: #ffffff;
+    border-color: rgba(226,232,240,1);
+  }
+  .composition-card-dark {
+    background-color: rgba(10,47,117,.82);
+    border-color: rgba(29,78,166,.64);
+  }
+  .composition-card-dark:hover {
+    background-color: #0a2f75;
+    border-color: rgba(29,78,166,1);
+  }
+  .composition-card-fill {
+    opacity: .72;
+    transition: opacity .28s ease;
+  }
+  .composition-card:hover .composition-card-fill {
+    opacity: 1;
+  }
 </style>
 </head>
 <body class="antialiased">
@@ -370,9 +397,9 @@
   <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-10">
     <div class="grid lg:grid-cols-12 gap-8 lg:gap-10 items-end">
       <div class="lg:col-span-12">
-        <h2 class="text-[10px] md:text-xs tracking-[0.3em] font-semibold uppercase text-slate-900 mt-2">Composição</h2>
-        <h3 class="font-display font-light text-slate-900 leading-[1.04] tracking-tight text-[34px] sm:text-4xl md:text-6xl mt-4 max-w-3xl">
-          Cinco ativos, <span class="italic text-sky-600 font-medium">uma</span> só cápsula.
+        <h2 class="text-[10px] md:text-xs tracking-[0.3em] font-semibold uppercase text-white mt-2">Composição</h2>
+        <h3 class="font-display font-light text-white leading-[1.04] tracking-tight text-[34px] sm:text-4xl md:text-6xl mt-4 max-w-3xl">
+          Cinco ativos, <span class="italic text-sky-300 font-medium">uma</span> só cápsula.
         </h3>
       </div>
     </div>
@@ -381,7 +408,7 @@
     <div class="mt-10 md:mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
 
       <!-- 01 Colágeno II -->
-      <article class="relative bg-white/96 rounded-[28px] p-6 md:p-10 card-lift min-h-[280px] md:min-h-[320px] flex flex-col justify-between overflow-hidden border border-slate-200/80">
+      <article class="composition-card composition-card-light relative rounded-[28px] p-6 md:p-10 card-lift min-h-[280px] md:min-h-[320px] flex flex-col justify-between overflow-hidden border">
         <div class="absolute -right-6 -top-6 w-40 h-40 rounded-full bg-sky-100/38"></div>
         <div class="relative flex items-start">
           <span class="inline-flex items-center justify-center w-11 h-11 rounded-full bg-white/70 border border-sky-300/50 shadow-sm">
@@ -398,8 +425,8 @@
       </article>
 
       <!-- 02 Cúrcuma -->
-      <article class="relative bg-[#0a2f75]/94 rounded-[28px] p-6 md:p-10 card-lift min-h-[280px] md:min-h-[320px] flex flex-col justify-between overflow-hidden text-white border border-[#1d4ea6]/70 shadow-[0_20px_42px_-26px_rgba(4,18,51,.75)]">
-        <div class="absolute inset-0 bg-gradient-to-br from-[#114398]/45 via-[#0a2f75]/42 to-[#08245b]/52"></div>
+      <article class="composition-card composition-card-dark relative rounded-[28px] p-6 md:p-10 card-lift min-h-[280px] md:min-h-[320px] flex flex-col justify-between overflow-hidden text-white border shadow-[0_20px_42px_-26px_rgba(4,18,51,.75)]">
+        <div class="composition-card-fill absolute inset-0 bg-gradient-to-br from-[#114398]/45 via-[#0a2f75]/42 to-[#08245b]/52"></div>
         <div class="absolute -left-8 -bottom-8 w-48 h-48 rounded-full bg-sky-500/18"></div>
         <div class="relative flex items-start">
           <span class="inline-flex items-center justify-center w-11 h-11 rounded-full bg-white/10 border border-sky-300/35">
@@ -417,7 +444,7 @@
       </article>
 
       <!-- 03 Magnésio -->
-      <article class="relative bg-white/96 rounded-[28px] p-6 md:p-10 card-lift min-h-[280px] md:min-h-[320px] flex flex-col justify-between overflow-hidden text-slate-900 border border-slate-200/80">
+      <article class="composition-card composition-card-light relative rounded-[28px] p-6 md:p-10 card-lift min-h-[280px] md:min-h-[320px] flex flex-col justify-between overflow-hidden text-slate-900 border">
         <div class="absolute -right-10 top-10 w-40 h-40 rounded-full bg-slate-100/52"></div>
         <div class="relative flex items-start">
           <span class="inline-flex items-center justify-center w-11 h-11 rounded-full bg-white/70 border border-slate-300/45 shadow-sm">
@@ -434,8 +461,8 @@
       </article>
 
       <!-- 04 Vit D -->
-      <article class="relative bg-[#0a2f75]/94 rounded-[28px] p-6 md:p-10 card-lift min-h-[280px] md:min-h-[320px] flex flex-col justify-between border border-[#1d4ea6]/70 overflow-hidden text-white shadow-[0_20px_42px_-26px_rgba(4,18,51,.75)]">
-        <div class="absolute inset-0 bg-gradient-to-br from-[#114398]/45 via-[#0a2f75]/42 to-[#08245b]/52"></div>
+      <article class="composition-card composition-card-dark relative rounded-[28px] p-6 md:p-10 card-lift min-h-[280px] md:min-h-[320px] flex flex-col justify-between border overflow-hidden text-white shadow-[0_20px_42px_-26px_rgba(4,18,51,.75)]">
+        <div class="composition-card-fill absolute inset-0 bg-gradient-to-br from-[#114398]/45 via-[#0a2f75]/42 to-[#08245b]/52"></div>
         <div class="absolute -left-10 -top-10 w-48 h-48 rounded-full bg-sky-500/15"></div>
         <div class="relative flex items-start">
           <span class="inline-flex items-center justify-center w-11 h-11 rounded-full bg-white/10 border border-sky-300/35 shadow-sm">
@@ -455,7 +482,7 @@
       </article>
 
       <!-- 05 Vit K -->
-      <article class="relative bg-white/96 rounded-[28px] p-6 md:p-10 card-lift min-h-[280px] md:min-h-[320px] flex flex-col justify-between border border-slate-200/80 overflow-hidden">
+      <article class="composition-card composition-card-light relative rounded-[28px] p-6 md:p-10 card-lift min-h-[280px] md:min-h-[320px] flex flex-col justify-between border overflow-hidden">
         <div class="absolute -right-10 -bottom-10 w-48 h-48 rounded-full bg-sky-100/35"></div>
         <div class="relative flex items-start">
           <span class="inline-flex items-center justify-center w-11 h-11 rounded-full bg-white/70 border border-sky-300/40 shadow-sm">
@@ -473,8 +500,8 @@
       </article>
 
       <!-- 06 CTA card -->
-      <article class="relative bg-[#0a2f75]/94 rounded-[28px] p-6 md:p-10 card-lift min-h-[280px] md:min-h-[320px] flex flex-col justify-between text-white overflow-hidden border border-[#1d4ea6]/70 shadow-[0_20px_42px_-26px_rgba(4,18,51,.75)]">
-        <div class="absolute inset-0 bg-gradient-to-br from-[#114398]/45 via-[#0a2f75]/42 to-[#08245b]/52"></div>
+      <article class="composition-card composition-card-dark relative rounded-[28px] p-6 md:p-10 card-lift min-h-[280px] md:min-h-[320px] flex flex-col justify-between text-white overflow-hidden border shadow-[0_20px_42px_-26px_rgba(4,18,51,.75)]">
+        <div class="composition-card-fill absolute inset-0 bg-gradient-to-br from-[#114398]/45 via-[#0a2f75]/42 to-[#08245b]/52"></div>
         <div class="relative">
           <h4 class="font-display font-medium text-2xl md:text-3xl leading-tight text-white">A sinergia que <span class="italic text-sky-400 font-light">faz a diferença.</span></h4>
           <a href="https://wa.me/5519000000000?text=Quero%20saber%20mais%20sobre%20o%20ARTRO-C"
