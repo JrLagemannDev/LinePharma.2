@@ -257,10 +257,12 @@
             <h2 class="text-[10px] md:text-xs tracking-[0.3em] font-semibold uppercase text-slate-500">O Produto</h2>
             <div class="mt-2 w-10 h-[2px] bg-sky-400"></div>
             <div class="mt-6 max-w-[340px] md:max-w-[390px]">
-              <div class="relative overflow-hidden rounded-[28px] md:rounded-[34px] min-h-[340px] md:min-h-[460px] bg-slate-100 border border-slate-200 p-3 md:p-4">
-                <img src="assets/images/artro-c-capsula.png"
+              <div class="relative overflow-hidden rounded-[28px] md:rounded-[34px] aspect-[1007/1561] bg-slate-100 border border-slate-200" style="aspect-ratio: 1007 / 1561;">
+                <img src="assets/images/artro-c-capsula2.png"
                      alt="Imagem da cápsula ARTRO-C"
-                     class="w-full h-full object-contain object-center" />
+                     class="absolute inset-0 w-full h-full object-cover object-center"
+                     loading="lazy"
+                     decoding="async" />
               </div>
             </div>
           </div>
