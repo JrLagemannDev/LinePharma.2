@@ -126,8 +126,10 @@
   <nav class="max-w-7xl mx-auto px-5 md:px-10 py-3.5 md:py-5 flex items-center justify-between gap-3">
     <a href="#" class="flex items-center gap-2.5 md:gap-3 min-w-0">
       
-      <!-- Logo PNG Transparente -->
-      <img src="logo.png" alt="Logo Line Pharma" class="shrink-0 h-10 md:h-12 w-auto" />
+      <!-- Logo 3D (com fallback PNG) -->
+      <div id="site-logo-3d" class="shrink-0 relative h-10 w-10 md:h-12 md:w-12 overflow-hidden">
+        <img id="site-logo-fallback" src="logo.png" alt="Logo Line Pharma" class="w-full h-full object-contain" />
+      </div>
 
       <!-- Se a sua imagem (logo.png) JÁ tiver o texto "LINE PHARMA" escrito nela, você pode APAGAR a div abaixo para não ficar duplicado -->
       <div class="leading-none min-w-0">
@@ -822,6 +824,124 @@
     menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
     // Close on resize to desktop
     window.addEventListener('resize', () => { if (window.innerWidth >= 768) close(); });
+  })();
+</script>
+
+<script type="module">
+  import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+  import { GLTFLoader } from 'https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
+
+  (function () {
+    const mount = document.getElementById('site-logo-3d');
+    const fallback = document.getElementById('site-logo-fallback');
+    if (!mount || !fallback) return;
+
+    const hasWebGL = (() => {
+      try {
+        const canvas = document.createElement('canvas');
+        return !!(window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+      } catch {
+        return false;
+      }
+    })();
+    if (!hasWebGL) return;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+    camera.position.set(0, 0, 3.2);
+
+    const renderer = new THREE.WebGLRenderer({
+      alpha: true,
+      antialias: true,
+      powerPreference: 'low-power'
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    renderer.setSize(mount.clientWidth || 48, mount.clientHeight || 48, false);
+    renderer.setClearColor(0x000000, 0);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.domElement.style.width = '100%';
+    renderer.domElement.style.height = '100%';
+    renderer.domElement.style.position = 'absolute';
+    renderer.domElement.style.inset = '0';
+    renderer.domElement.style.display = 'block';
+    mount.appendChild(renderer.domElement);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 1.15));
+    const keyLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    keyLight.position.set(2.5, 3, 4);
+    scene.add(keyLight);
+
+    let model = null;
+
+    function tintMaterial(material) {
+      if (!material || !material.color) return;
+      material.color.set('#F2B6C4');
+      if ('metalness' in material) material.metalness = 0.05;
+      if ('roughness' in material) material.roughness = 0.45;
+      material.needsUpdate = true;
+    }
+
+    function resize() {
+      const width = mount.clientWidth || 48;
+      const height = mount.clientHeight || 48;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height, false);
+    }
+
+    const loader = new GLTFLoader();
+    loader.load(
+      'assets/models/logo-3d.glb',
+      (gltf) => {
+        model = gltf.scene;
+        model.traverse((child) => {
+          if (!child.isMesh) return;
+          if (Array.isArray(child.material)) {
+            child.material.forEach(tintMaterial);
+          } else {
+            tintMaterial(child.material);
+          }
+          child.castShadow = false;
+          child.receiveShadow = false;
+        });
+
+        scene.add(model);
+
+        const box = new THREE.Box3().setFromObject(model);
+        const size = box.getSize(new THREE.Vector3());
+        const center = box.getCenter(new THREE.Vector3());
+        model.position.sub(center);
+
+        const maxDim = Math.max(size.x, size.y, size.z) || 1;
+        camera.near = Math.max(0.01, maxDim / 100);
+        camera.far = maxDim * 100;
+        camera.position.set(0, 0, maxDim * 2.5);
+        camera.updateProjectionMatrix();
+
+        fallback.classList.add('hidden');
+      },
+      undefined,
+      () => {
+        // fallback PNG permanece visível em caso de erro
+      }
+    );
+
+    function animate() {
+      requestAnimationFrame(animate);
+      if (document.hidden) return;
+      if (model) model.rotation.y += 0.003;
+      renderer.render(scene, camera);
+    }
+
+    resize();
+    animate();
+
+    if ('ResizeObserver' in window) {
+      const ro = new ResizeObserver(resize);
+      ro.observe(mount);
+    } else {
+      window.addEventListener('resize', resize);
+    }
   })();
 </script>
 
