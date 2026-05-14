@@ -620,8 +620,10 @@
       <div class="relative rounded-[32px] md:rounded-[40px] bg-slate-50 border border-slate-100 p-6 md:p-10 overflow-hidden min-h-[360px] md:min-h-[480px] flex items-center justify-center">
         <div class="absolute inset-0 halo-sky"></div>
 
-        <!-- Imagem Grande PNG Transparente -->
-        <img src="logo.png" alt="Logo Line Pharma" class="relative h-48 sm:h-64 md:h-80 w-auto" />
+        <!-- Logo 3D grande (com fallback PNG) -->
+        <div id="brand-logo-3d" class="relative h-48 w-48 sm:h-64 sm:w-64 md:h-80 md:w-80 overflow-hidden">
+          <img id="brand-logo-fallback" src="logo.png" alt="Logo Line Pharma" class="w-full h-full object-contain" />
+        </div>
       </div>
     </div>
 
@@ -832,9 +834,14 @@
   import { GLTFLoader } from 'https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
 
   (function () {
-    const mount = document.getElementById('site-logo-3d');
-    const fallback = document.getElementById('site-logo-fallback');
-    if (!mount || !fallback) return;
+    const targets = [
+      { mountId: 'site-logo-3d', fallbackId: 'site-logo-fallback', speed: 0.0032, fallbackSize: 48 },
+      { mountId: 'brand-logo-3d', fallbackId: 'brand-logo-fallback', speed: 0.0028, fallbackSize: 320 }
+    ]
+      .map((t) => ({ ...t, mount: document.getElementById(t.mountId), fallback: document.getElementById(t.fallbackId) }))
+      .filter((t) => t.mount && t.fallback);
+
+    if (!targets.length) return;
 
     const hasWebGL = (() => {
       try {
@@ -846,32 +853,7 @@
     })();
     if (!hasWebGL) return;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
-    camera.position.set(0, 0, 3.2);
-
-    const renderer = new THREE.WebGLRenderer({
-      alpha: true,
-      antialias: true,
-      powerPreference: 'low-power'
-    });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-    renderer.setSize(mount.clientWidth || 48, mount.clientHeight || 48, false);
-    renderer.setClearColor(0x000000, 0);
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.domElement.style.width = '100%';
-    renderer.domElement.style.height = '100%';
-    renderer.domElement.style.position = 'absolute';
-    renderer.domElement.style.inset = '0';
-    renderer.domElement.style.display = 'block';
-    mount.appendChild(renderer.domElement);
-
-    scene.add(new THREE.AmbientLight(0xffffff, 1.15));
-    const keyLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    keyLight.position.set(2.5, 3, 4);
-    scene.add(keyLight);
-
-    let model = null;
+    const viewers = [];
 
     function tintMaterial(material) {
       if (!material || !material.color) return;
@@ -881,44 +863,87 @@
       material.needsUpdate = true;
     }
 
-    function resize() {
-      const width = mount.clientWidth || 48;
-      const height = mount.clientHeight || 48;
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height, false);
-    }
-
     const loader = new GLTFLoader();
     loader.load(
       'assets/models/logo-3d.glb',
       (gltf) => {
-        model = gltf.scene;
-        model.traverse((child) => {
-          if (!child.isMesh) return;
-          if (Array.isArray(child.material)) {
-            child.material.forEach(tintMaterial);
+        for (const target of targets) {
+          const { mount, fallback, speed, fallbackSize } = target;
+
+          const scene = new THREE.Scene();
+          const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+          camera.position.set(0, 0, 3.2);
+
+          const renderer = new THREE.WebGLRenderer({
+            alpha: true,
+            antialias: true,
+            powerPreference: 'low-power'
+          });
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+          renderer.setSize(mount.clientWidth || fallbackSize, mount.clientHeight || fallbackSize, false);
+          renderer.setClearColor(0x000000, 0);
+          renderer.outputColorSpace = THREE.SRGBColorSpace;
+          renderer.domElement.style.width = '100%';
+          renderer.domElement.style.height = '100%';
+          renderer.domElement.style.position = 'absolute';
+          renderer.domElement.style.inset = '0';
+          renderer.domElement.style.display = 'block';
+          mount.appendChild(renderer.domElement);
+
+          scene.add(new THREE.AmbientLight(0xffffff, 1.15));
+          const keyLight = new THREE.DirectionalLight(0xffffff, 0.8);
+          keyLight.position.set(2.5, 3, 4);
+          scene.add(keyLight);
+
+          const model = gltf.scene.clone(true);
+          model.traverse((child) => {
+            if (!child.isMesh) return;
+            if (Array.isArray(child.material)) {
+              child.material = child.material.map((m) => {
+                const copy = m.clone();
+                tintMaterial(copy);
+                return copy;
+              });
+            } else if (child.material) {
+              child.material = child.material.clone();
+              tintMaterial(child.material);
+            }
+            child.castShadow = false;
+            child.receiveShadow = false;
+          });
+
+          scene.add(model);
+
+          const box = new THREE.Box3().setFromObject(model);
+          const size = box.getSize(new THREE.Vector3());
+          const center = box.getCenter(new THREE.Vector3());
+          model.position.sub(center);
+
+          const maxDim = Math.max(size.x, size.y, size.z) || 1;
+          camera.near = Math.max(0.01, maxDim / 100);
+          camera.far = maxDim * 100;
+          camera.position.set(0, 0, maxDim * 2.5);
+          camera.updateProjectionMatrix();
+
+          const resize = () => {
+            const width = mount.clientWidth || fallbackSize;
+            const height = mount.clientHeight || fallbackSize;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height, false);
+          };
+          resize();
+
+          if ('ResizeObserver' in window) {
+            const ro = new ResizeObserver(resize);
+            ro.observe(mount);
           } else {
-            tintMaterial(child.material);
+            window.addEventListener('resize', resize);
           }
-          child.castShadow = false;
-          child.receiveShadow = false;
-        });
 
-        scene.add(model);
-
-        const box = new THREE.Box3().setFromObject(model);
-        const size = box.getSize(new THREE.Vector3());
-        const center = box.getCenter(new THREE.Vector3());
-        model.position.sub(center);
-
-        const maxDim = Math.max(size.x, size.y, size.z) || 1;
-        camera.near = Math.max(0.01, maxDim / 100);
-        camera.far = maxDim * 100;
-        camera.position.set(0, 0, maxDim * 2.5);
-        camera.updateProjectionMatrix();
-
-        fallback.classList.add('hidden');
+          fallback.classList.add('hidden');
+          viewers.push({ renderer, scene, camera, model, speed });
+        }
       },
       undefined,
       () => {
@@ -929,19 +954,12 @@
     function animate() {
       requestAnimationFrame(animate);
       if (document.hidden) return;
-      if (model) model.rotation.y += 0.003;
-      renderer.render(scene, camera);
+      for (const viewer of viewers) {
+        viewer.model.rotation.y += viewer.speed;
+        viewer.renderer.render(viewer.scene, viewer.camera);
+      }
     }
-
-    resize();
     animate();
-
-    if ('ResizeObserver' in window) {
-      const ro = new ResizeObserver(resize);
-      ro.observe(mount);
-    } else {
-      window.addEventListener('resize', resize);
-    }
   })();
 </script>
 
