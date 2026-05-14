@@ -102,12 +102,67 @@
 
   /* Selection */
   ::selection { background: #BAE6FD; color: #0F172A; } /* Sky-200 to slate-900 */
+
+  :root { --ticker-height: 36px; }
+
+  /* Navbar behavior: transparent over hero (top) -> solid on scroll */
+  .site-header {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: var(--ticker-height);
+    z-index: 60;
+    transition: background-color .28s ease, color .28s ease, box-shadow .28s ease, border-color .28s ease, top .28s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .site-header.navbar--transparent {
+    background-color: transparent;
+    border-bottom: 1px solid rgba(255,255,255,.2);
+    box-shadow: none;
+  }
+  .site-header.navbar--scrolled {
+    top: 0;
+    background-color: rgba(255,255,255,.94);
+    border-bottom: 1px solid rgba(148,163,184,.32);
+    box-shadow: 0 12px 24px -20px rgba(15,23,42,.4);
+  }
+
+  .site-header .brand-primary,
+  .site-header .brand-secondary,
+  .site-header .nav-links,
+  .site-header .nav-link,
+  .site-header .menu-toggle {
+    transition: color .24s ease, border-color .24s ease, background-color .24s ease;
+  }
+
+  .site-header.navbar--transparent .brand-primary { color: #ffffff; }
+  .site-header.navbar--transparent .brand-secondary { color: rgba(241,245,249,.92); }
+  .site-header.navbar--transparent .nav-links,
+  .site-header.navbar--transparent .nav-link { color: #f8fafc; }
+  .site-header.navbar--transparent .menu-toggle {
+    color: #f8fafc;
+    border-color: rgba(255,255,255,.45);
+    background-color: rgba(15,23,42,.18);
+  }
+  .site-header.navbar--transparent #site-logo-3d canvas { filter: grayscale(1) brightness(3.3); }
+
+  .site-header.navbar--scrolled .brand-primary { color: #0f172a; }
+  .site-header.navbar--scrolled .brand-secondary { color: #64748b; }
+  .site-header.navbar--scrolled .nav-links,
+  .site-header.navbar--scrolled .nav-link { color: #334155; }
+  .site-header.navbar--scrolled .menu-toggle {
+    color: #0f172a;
+    border-color: rgba(148,163,184,.45);
+    background-color: transparent;
+  }
+  .site-header.navbar--scrolled #site-logo-3d canvas { filter: grayscale(1) brightness(.22); }
 </style>
 </head>
 <body class="antialiased">
 
 <!-- ============ TOP TICKER ============ -->
-<div class="bg-slate-900 text-white text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.25em] uppercase py-2 md:py-2.5 overflow-hidden relative">
+<div id="top-ticker" class="bg-slate-900 text-white text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.25em] uppercase py-2 md:py-2.5 overflow-hidden relative">
   <div class="flex whitespace-nowrap marquee-track">
     <div class="flex items-center gap-6 md:gap-10 px-4 md:px-5">
       <span>Zero açúcares</span><span class="text-sky-400">◆</span>
@@ -127,7 +182,7 @@
 </div>
 
 <!-- ============ NAV ============ -->
-<header class="relative z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/60">
+<header id="site-header" class="site-header navbar--transparent">
   <nav class="max-w-7xl mx-auto px-5 md:px-10 py-3.5 md:py-5 flex items-center justify-between gap-3">
     <a href="#" class="flex items-center gap-2.5 md:gap-3 min-w-0">
       
@@ -136,16 +191,16 @@
       </div>
 
       <div class="leading-none min-w-0">
-        <div class="font-display font-semibold text-lg md:text-xl tracking-tight text-slate-900 truncate">Line Pharma</div>
-        <div class="text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.3em] text-slate-500 mt-0.5 truncate">Nutraceutical Supplements</div>
+        <div class="brand-primary font-display font-semibold text-lg md:text-xl tracking-tight truncate">Line Pharma</div>
+        <div class="brand-secondary text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.3em] mt-0.5 truncate">Nutraceutical Supplements</div>
       </div>
     </a>
 
-    <div class="hidden md:flex items-center gap-10 text-sm text-slate-700">
-      <a href="#produto"     class="link-underline">O produto</a>
-      <a href="#composicao"  class="link-underline">Composição</a>
-      <a href="#beneficios"  class="link-underline">Benefícios</a>
-      <a href="#marca"       class="link-underline">A marca</a>
+    <div class="nav-links hidden md:flex items-center gap-10 text-sm">
+      <a href="#produto"     class="nav-link link-underline">O produto</a>
+      <a href="#composicao"  class="nav-link link-underline">Composição</a>
+      <a href="#beneficios"  class="nav-link link-underline">Benefícios</a>
+      <a href="#marca"       class="nav-link link-underline">A marca</a>
     </div>
 
     <div class="flex items-center gap-2 md:gap-3 shrink-0">
@@ -167,7 +222,7 @@
 
       <!-- Hamburger -->
       <button id="menu-btn" aria-label="Abrir menu" aria-expanded="false"
-              class="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-full border border-slate-200 text-slate-900">
+              class="menu-toggle md:hidden inline-flex items-center justify-center w-11 h-11 rounded-full border">
         <svg id="menu-icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="13" x2="20" y2="13"/><line x1="4" y1="19" x2="14" y2="19"/></svg>
         <svg id="menu-icon-close" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
       </button>
@@ -195,7 +250,7 @@
 <section class="relative min-h-[80vh] md:min-h-[700px] overflow-hidden bg-slate-900 bg-cover bg-no-repeat flex items-center" style="background-image:url('assets/images/artro-c-principal.png'); background-position:right center;">
   <div class="absolute inset-0 bg-gradient-to-r from-slate-900/60 via-slate-900/22 to-transparent"></div>
 
-  <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-10 py-20 w-full">
+  <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-10 pt-32 pb-20 md:pt-40 md:pb-24 w-full">
     <div class="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
       <div class="lg:col-span-8 reveal">
         <div class="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur px-3.5 py-1.5 md:px-4 md:py-2 rounded-full border border-white/20 text-[10px] md:text-xs tracking-[0.2em] uppercase text-white shadow-sm font-medium">
@@ -824,6 +879,44 @@
     menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
     // Close on resize to desktop
     window.addEventListener('resize', () => { if (window.innerWidth >= 768) close(); });
+  })();
+
+  // Navbar transparent at top, solid on scroll
+  (function() {
+    const header = document.getElementById('site-header');
+    const ticker = document.getElementById('top-ticker');
+    if (!header) return;
+
+    let threshold = 24;
+    let rafPending = false;
+
+    function updateTickerOffset() {
+      const tickerHeight = ticker ? Math.round(ticker.getBoundingClientRect().height) : 0;
+      document.documentElement.style.setProperty('--ticker-height', `${tickerHeight}px`);
+      threshold = Math.max(20, Math.round(tickerHeight * 0.7));
+    }
+
+    function applyState() {
+      const isScrolled = window.scrollY > threshold;
+      header.classList.toggle('navbar--scrolled', isScrolled);
+      header.classList.toggle('navbar--transparent', !isScrolled);
+      rafPending = false;
+    }
+
+    function onScroll() {
+      if (rafPending) return;
+      rafPending = true;
+      window.requestAnimationFrame(applyState);
+    }
+
+    updateTickerOffset();
+    applyState();
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => {
+      updateTickerOffset();
+      applyState();
+    });
   })();
 </script>
 
