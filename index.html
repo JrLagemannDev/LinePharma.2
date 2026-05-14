@@ -89,17 +89,6 @@
   .card-lift { transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s ease; border: 1px solid #F1F5F9; }
   .card-lift:hover { transform: translateY(-6px); box-shadow: 0 20px 40px -15px rgba(15,23,42,.08); }
 
-  /* Fallback motion when 3D can't load */
-  @keyframes logo-fallback-spin {
-    from { transform: perspective(700px) rotateY(0deg); }
-    to { transform: perspective(700px) rotateY(360deg); }
-  }
-  .logo-fallback-spin {
-    animation: logo-fallback-spin 10s linear infinite;
-    transform-origin: center;
-    backface-visibility: hidden;
-  }
-
   /* Molecular pattern */
   .bg-hex {
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='96' height='84' viewBox='0 0 96 84'><g fill='none' stroke='%23E2E8F0' stroke-width='1'><polygon points='48,4 84,24 84,62 48,82 12,62 12,24'/><circle cx='48' cy='4' r='2.5'/><circle cx='84' cy='24' r='2.5'/><circle cx='84' cy='62' r='2.5'/><circle cx='48' cy='82' r='2.5'/><circle cx='12' cy='62' r='2.5'/><circle cx='12' cy='24' r='2.5'/></g></svg>");
@@ -137,12 +126,10 @@
   <nav class="max-w-7xl mx-auto px-5 md:px-10 py-3.5 md:py-5 flex items-center justify-between gap-3">
     <a href="#" class="flex items-center gap-2.5 md:gap-3 min-w-0">
       
-      <!-- Logo 3D (com fallback PNG) -->
+      <!-- Logo 3D -->
       <div id="site-logo-3d" class="shrink-0 relative h-10 w-10 md:h-12 md:w-12 overflow-hidden">
-        <img id="site-logo-fallback" src="logo.png" alt="Logo Line Pharma" class="w-full h-full object-contain logo-fallback-spin" />
       </div>
 
-      <!-- Se a sua imagem (logo.png) JÁ tiver o texto "LINE PHARMA" escrito nela, você pode APAGAR a div abaixo para não ficar duplicado -->
       <div class="leading-none min-w-0">
         <div class="font-display font-semibold text-lg md:text-xl tracking-tight text-slate-900 truncate">Line Pharma</div>
         <div class="text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.3em] text-slate-500 mt-0.5 truncate">Nutraceutical Supplements</div>
@@ -201,7 +188,7 @@
 
 <!-- ============ HERO COM PRODUTO EM FUNDO ============ -->
 <section class="relative min-h-[80vh] md:min-h-[700px] overflow-hidden bg-slate-900 bg-cover bg-no-repeat flex items-center" style="background-image:url('assets/images/artro-c-principal.png'); background-position:right center;">
-  <div class="absolute inset-0 bg-gradient-to-r from-slate-900/90 via-slate-900/75 to-slate-900/45"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-slate-900/60 via-slate-900/22 to-transparent"></div>
 
   <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-10 py-20 w-full">
     <div class="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
@@ -260,9 +247,9 @@
 </section>
 
 <!-- ============ PRODUCT STORY ============ -->
-<section id="produto" class="relative py-16 md:py-32 min-h-[860px] md:min-h-[980px] bg-slate-900 bg-[url('bg-hero.jpg')] bg-contain bg-top bg-no-repeat overflow-hidden">
-  <div class="absolute inset-0 bg-slate-900/70 mix-blend-multiply"></div>
-  <div class="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/50 to-slate-900/80"></div>
+<section id="produto" class="relative py-16 md:py-32 min-h-[780px] md:min-h-[900px] bg-slate-900 bg-[url('bg-hero.jpg')] bg-cover bg-center bg-no-repeat overflow-hidden">
+  <div class="absolute inset-0 bg-slate-900/18"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-slate-900/16 via-slate-900/12 to-slate-900/20"></div>
   <div class="relative z-10 max-w-7xl mx-auto px-5 md:px-10">
     <div class="grid lg:grid-cols-12 gap-8 lg:gap-12">
       <!-- Section label -->
@@ -624,9 +611,8 @@
       <div class="relative rounded-[32px] md:rounded-[40px] bg-slate-50 border border-slate-100 p-6 md:p-10 overflow-hidden min-h-[360px] md:min-h-[480px] flex items-center justify-center">
         <div class="absolute inset-0 halo-sky"></div>
 
-        <!-- Logo 3D grande (com fallback PNG) -->
+        <!-- Logo 3D grande -->
         <div id="brand-logo-3d" class="relative h-48 w-48 sm:h-64 sm:w-64 md:h-80 md:w-80 overflow-hidden">
-          <img id="brand-logo-fallback" src="logo.png" alt="Logo Line Pharma" class="w-full h-full object-contain logo-fallback-spin" />
         </div>
       </div>
     </div>
@@ -709,10 +695,8 @@
       <div class="sm:col-span-2 md:col-span-5">
         <div class="flex items-center gap-3">
           
-          <!-- Imagem Pequena no Rodapé PNG -->
-          <!-- Mantive um fundo branco suave (bg-white p-1) apenas porque a cor do seu texto é cinzento escuro, e iria desaparecer no fundo escuro do rodapé -->
+          <!-- Logo 3D no rodapé -->
           <div id="footer-logo-3d" class="shrink-0 relative h-10 w-10 md:h-12 md:w-12 bg-white p-1 rounded-md overflow-hidden">
-            <img id="footer-logo-fallback" src="logo.png" alt="Logo Line Pharma" class="w-full h-full object-contain logo-fallback-spin" />
           </div>
 
           <!-- Se a sua imagem já tiver o texto, você pode APAGAR a div abaixo para não duplicar -->
@@ -841,12 +825,12 @@
 
   (function () {
     const targets = [
-      { mountId: 'site-logo-3d', fallbackId: 'site-logo-fallback', speed: 0.0036, fallbackSize: 48 },
-      { mountId: 'brand-logo-3d', fallbackId: 'brand-logo-fallback', speed: 0.0032, fallbackSize: 320 },
-      { mountId: 'footer-logo-3d', fallbackId: 'footer-logo-fallback', speed: 0.0036, fallbackSize: 48 }
+      { mountId: 'site-logo-3d', speed: 0.0036, fallbackSize: 48 },
+      { mountId: 'brand-logo-3d', speed: 0.0032, fallbackSize: 320 },
+      { mountId: 'footer-logo-3d', speed: 0.0036, fallbackSize: 48 }
     ]
-      .map((t) => ({ ...t, mount: document.getElementById(t.mountId), fallback: document.getElementById(t.fallbackId) }))
-      .filter((t) => t.mount && t.fallback);
+      .map((t) => ({ ...t, mount: document.getElementById(t.mountId) }))
+      .filter((t) => t.mount);
 
     if (!targets.length) return;
 
@@ -875,7 +859,7 @@
       'assets/models/logo-3d.glb',
       (gltf) => {
         for (const target of targets) {
-          const { mount, fallback, speed, fallbackSize } = target;
+          const { mount, speed, fallbackSize } = target;
 
           const scene = new THREE.Scene();
           const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
@@ -949,14 +933,12 @@
             window.addEventListener('resize', resize);
           }
 
-          fallback.classList.add('hidden');
           viewers.push({ renderer, scene, camera, model, speed });
         }
       },
       undefined,
       (error) => {
         console.error('Falha ao carregar logo 3D:', error);
-        // fallback PNG permanece visível em caso de erro
       }
     );
 
